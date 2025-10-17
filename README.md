@@ -26,4 +26,4 @@ O script `src/main/resources/data.sql` é executado automaticamente na inicializ
 4. **Acessar o H2 Console (Opcional):**
    Com a aplicação rodando, acesse: `http://localhost:8080/h2-console`
     - **JDBC URL:** `jdbc:h2:mem:vendasdb;DB_CLOSE_DELAY=-1`
-    - **User:** `ingridfti` 
+    - **User:** `ingrid` 
