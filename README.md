@@ -1,6 +1,6 @@
 # 💻 TesteVendas: Backend de Vendas (Spring Boot)
 
-Este projeto implementa um serviço de backend para um sistema de vendas, utilizando Spring Boot, Spring Data JPA e um banco de dados H2. O objetivo é demonstrar a modelagem de dados relacional e a configuração de um ambiente de desenvolvimento limpo.
+Este projeto implementa um serviço de backend para um sistema de vendas, utilizando Spring Boot, Spring Data JPA e um banco de dados H2. O objetivo é demonstrar a modelagem de dados relacional e a configuração de um ambiente de desenvolvimento.
 
 ## 🎯 Desafio
 
@@ -26,4 +26,4 @@ O script `src/main/resources/data.sql` é executado automaticamente na inicializ
 4. **Acessar o H2 Console (Opcional):**
    Com a aplicação rodando, acesse: `http://localhost:8080/h2-console`
     - **JDBC URL:** `jdbc:h2:mem:vendasdb;DB_CLOSE_DELAY=-1`
-    - **User:** `ingridfti` (ou o usuário que você configurou)
+    - **User:** `ingridfti` 
