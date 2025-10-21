@@ -13,15 +13,20 @@ import java.math.BigDecimal;
 @Builder
 @Data
 @Entity
-@Table(name ="Produto")
+@Table(name ="produto")
 public class Produto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idProduto;
+    @Column(name = "id_produto")
+    private Long id;
 
-    @Column
-    private String nomeProduto;
+    @Column(name = "nome_prod")
+    private String nome;
 
-    @Column
+    @Column(name = "valor_unitario")
     private BigDecimal valorUnitario;
+
+    @Column(name = "descricao")
+    private String descricao;
 }

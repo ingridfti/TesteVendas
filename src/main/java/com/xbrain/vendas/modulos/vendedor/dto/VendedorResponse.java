@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VendedorResponse {
-    private Long id_vendedor;
-    private String nome_vendedor;
+    private Long idVendedor;
+    private String nomeVendedor;
 
     public static VendedorResponse of(Vendedor vendedor) {
         return VendedorResponse.builder()
-                .id_vendedor(vendedor.getId_vendedor())
-                .nome_vendedor(vendedor.getNome_vendedor())
+                .idVendedor(vendedor.getIdVendedor())
+                .nomeVendedor(vendedor.getNomeVendedor())
                 .build();
     }
 }

@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Venda {
     private Long id_venda;
 
     @Column
-    private Date dataVenda;
+    private LocalDate dataVenda;
 
     @Column
     private BigDecimal valorTotalVenda;
@@ -41,6 +42,8 @@ public class Venda {
     private List<ItemVenda> itens;
 
 
+    /*
+    Fica para uma atualizacao futura, nao esta sendo usado no momento
     public static Venda of(VendaRequest request, Vendedor vendedor, Produto produto, List<ItemVenda> itens) {
         return Venda.builder()
                 .vendedor(vendedor)
@@ -48,5 +51,5 @@ public class Venda {
                 .itens(itens)
                 .dataVenda(new Date())
                 .build();
-    }
+    }*/
 }

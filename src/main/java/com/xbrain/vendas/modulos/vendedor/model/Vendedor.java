@@ -1,6 +1,5 @@
 package com.xbrain.vendas.modulos.vendedor.model;
 
-import com.xbrain.vendas.modulos.vendedor.dto.VendedorRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Entity
-@Table(name = "Vendedor")
+@Table(name = "VENDEDOR")
 public class Vendedor {
 
     @Id
@@ -23,12 +22,11 @@ public class Vendedor {
     @Column
     private String nomeVendedor;
 
-    // esse metodo é pra criar um obj de vendedor
-    public static Vendedor of(VendedorRequest request){
+    // esse metodo é pra criar um obj de vendedor, seria usado para criar um novo vendedor
+    /*public static Vendedor of(VendedorRequest request){
         return Vendedor.builder()
-                .nomeVendedor(request.getNome_vendedor())
+                .nomeVendedor(request.getNomeVendedor())
                 .build();
-    }
-
+    }*/
 }
 

@@ -9,17 +9,22 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.List;
 
-// precisei de ajuda do chat com o JPA e as anotaçoes, e tb de ajuda com a lógica
 public interface VendaRepository extends JpaRepository<Venda, Long> {
 
-    @Query("SELECT new com.xbrain.vendas.modulos.vendedor.dto.RelatorioVendedor(" +
-            "vdd.nome_vendedor, " +
-            "SUM(vd.valorTotalVenda), " +
-            "SUM(vd.valorTotalVenda) / COUNT(DISTINCT vd.dataVenda)) " +
-            "FROM Vendas vd JOIN vd.vendedor vdd " +
-            "WHERE vd.dataVenda BETWEEN :dataInicio AND :dataFim " +
-            "GROUP BY vdd.nome_vendedor")
+    List<Venda> findByDataVendaBetween(LocalDate dataInicio, LocalDate dataFim);
 
-    List<RelatorioVendedor> gerarRelatorio (@Param("dataInicio") LocalDate dataInicio,
-                                            @Param("dataFim") LocalDate dataFim);
+    @Query("SELECT new com.xbrain.vendas.modulos.vendedor.dto.RelatorioVendedor(" +
+            "v.vendedor.nomeVendedor, " +
+            "SUM(v.valorTotalVenda), " +
+            "COUNT(DISTINCT v.dataVenda)) " +
+            "FROM Venda v " +
+            "WHERE v.dataVenda BETWEEN :dataInicio AND :dataFim " +
+            "GROUP BY v.vendedor.nomeVendedor, v.vendedor.idVendedor")
+    List<RelatorioVendedor> gerarRelatorioAgregado(
+            @Param("dataInicio") LocalDate dataInicio,
+            @Param("dataFim") LocalDate dataFim
+    );
 }
+
+
+
