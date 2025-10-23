@@ -1,15 +1,13 @@
 package com.xbrain.vendas.modulos.vendedor.controller;
 
+import com.xbrain.vendas.modulos.venda.dto.VendaRequest;
+import com.xbrain.vendas.modulos.vendedor.dto.RelatorioVendasResponse;
 import com.xbrain.vendas.modulos.vendedor.dto.RelatorioVendedor;
+import com.xbrain.vendas.modulos.vendedor.model.Vendedor;
 import com.xbrain.vendas.modulos.vendedor.service.VendedorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -19,12 +17,18 @@ public class VendedorController {
 
     private final VendedorService vendedorService;
 
-    @GetMapping("/relatorio")
-    public ResponseEntity<List<RelatorioVendedor>> gerarRelatorio(
-            @RequestParam LocalDate dataInicio,
-            @RequestParam LocalDate dataFim) {
+    @PostMapping("/relatorio")
+    public List<RelatorioVendedor> gerarRelatorio(@RequestBody VendaRequest request) {
+        return vendedorService.listarResumoVendasPorPeriodo(request);
+    }
 
-        List<RelatorioVendedor> relatorio = vendedorService.listarResumoVendasPorPeriodo(dataInicio, dataFim);
-        return ResponseEntity.ok(relatorio);
+    // retorna QUANTIDADE vendas
+    @PostMapping("/relatorio/quantidade")
+    public RelatorioVendasResponse gerarRelatorioQuantidade(@RequestBody VendaRequest request) {
+        return vendedorService.listarResumoQuantidadeVendas(request);
+    }
+    @GetMapping("/{id}")
+    public Vendedor getVendedor(@PathVariable Long id){
+        return vendedorService.buscarPorId(id);
     }
 }

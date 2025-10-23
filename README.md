@@ -1,29 +1,29 @@
-# 💻 TesteVendas: Backend de Vendas (Spring Boot)
+Teste Prático de Programação Backend: Sistema de Gerenciamento de Vendas
 
-Este projeto implementa um serviço de backend para um sistema de vendas, utilizando Spring Boot, Spring Data JPA e um banco de dados H2. O objetivo é demonstrar a modelagem de dados relacional e a configuração de um ambiente de desenvolvimento.
+Objetivo do Projeto
+Desenvolver uma API REST em Spring Boot capaz de registrar transações de vendas e gerar um relatório agregado de desempenho dos vendedores por período.
 
-## 🎯 Desafio
+Tecnologias Utilizadas
+Linguagem: Java
+Framework: Spring Boot (Web, Data JPA)
+Banco de Dados: H2 Database (Em memória)
+Migration: Flyway
+Ferramentas: Lombok, Maven
 
-Desenvolver uma API REST com dois serviços principais:
-1.  Criar uma nova venda (POST).
-2.  Retornar métricas de vendas por vendedor (Total vendido e Média diária) em um período específico (GET).
+Como Executar o Projeto:
 
-## 📊 Modelagem do Banco de Dados (H2)
+1- Clone o Repositório
+2- Compilação: Execute o comando Maven: mvn clean install
+3- Execução: Inicie a aplicação Spring Boot através de um dos seguintes métodos:
+    - Via IDE: Execute a classe principal VendasApplication.java.
+    - Via Maven: mvn spring-boot:run
 
-O banco de dados foi modelado seguindo o padrão Header/Detail (4 tabelas) para garantir a integridade transacional:
-- **VENDEDOR**
-- **PRODUTO**
-- **VENDA** (Transação mestre: id, data, vendedor_id, valor_total_venda)
-- **ITEM_VENDA** (Detalhe da transação: venda_id, produto_id, quantidade, preco_venda)
+Instruções de Teste (Postman)
+A aplicação está rodando na porta 8080
 
-O script `src/main/resources/data.sql` é executado automaticamente na inicialização do Spring Boot, criando todas as tabelas e inserindo dados de teste.
-
-## ⚙️ Como Rodar o Projeto
-
-1. **Pré-requisitos:** Certifique-se de ter o Java (JDK) instalado.
-2. **Clonar o Repositório:** O repositório já está clonado.
-3. **Executar:** Abra o projeto no IntelliJ e rode a classe `VendasApplication.java`.
-4. **Acessar o H2 Console (Opcional):**
-   Com a aplicação rodando, acesse: `http://localhost:8080/h2-console`
-    - **JDBC URL:** `jdbc:h2:mem:vendasdb;DB_CLOSE_DELAY=-1`
-    - **User:** `ingrid` 
+Método  |            Caminho/URL         |               Função             | DTO/Ação Necessária
+POST    |/api/vendas                     | CRIAR VENDA (Registra transação) | Enviar vendedorId e itens no Body.
+POST    |/vendedores/relatorio/quantidade| RELATÓRIO DE QUANTIDADE          | Enviar dataInicio e dataFim no Body (JSON).
+POST    |/vendedores/relatorio           |RELATÓRIO DE VALOR (soma total)   | Enviar dataInicio e dataFim no Body (JSON).
+GET     |/api/vendas                     |Buscar vendas por período (data)  | Usar Query Params.
+GET     |/api/vendas/{id}                | Buscar venda por ID              | Usar o ID na URL.

@@ -1,5 +1,6 @@
 package com.xbrain.vendas.modulos.itemVenda.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.xbrain.vendas.modulos.produto.model.Produto;
 import com.xbrain.vendas.modulos.venda.model.Venda;
 import jakarta.persistence.*;
@@ -15,28 +16,28 @@ import java.math.BigDecimal;
 @Builder
 @Data
 @Entity
-@Table(name="item_venda") // Alterado para minúsculo, conforme a criação da tabela
+@Table(name="item_venda")
 public class ItemVenda {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_item") // Corrigido para minúsculo
+    @Column(name = "id_item")
     private Long id;
 
-    @Column(name = "quantidade", nullable = false) // Corrigido para minúsculo
+    @Column(name = "quantidade")
     private Integer quantidade;
 
-    // Relacionamento Many-to-One com Venda
+    // relacionamento Many-to-One com Produto
     @ManyToOne
-    @JoinColumn(name = "venda_id", nullable = false) // Corrigido para minúsculo
-    private Venda venda;
-
-    // Relacionamento Many-to-One com Produto
-    @ManyToOne
-    @JoinColumn(name = "produto_id", nullable = false) // Corrigido para minúsculo
+    @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
 
-    @Column(name = "preco_venda", nullable = false, precision = 10, scale = 2) // Corrigido para minúsculo
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "venda_id")
+    private com.xbrain.vendas.modulos.venda.model.Venda venda;
+
+    @Column(name = "preco_venda", nullable = false, precision = 10, scale = 2)
     private BigDecimal precoVenda;
 
     @Transient
@@ -45,5 +46,14 @@ public class ItemVenda {
             return BigDecimal.ZERO;
         }
         return precoVenda.multiply(new BigDecimal(quantidade));
+    }
+
+    public static ItemVenda of(Venda venda, Produto produto, BigDecimal precoUnitario, Integer quantidade) {
+        return ItemVenda.builder()
+                .venda(venda)
+                .produto(produto)
+                .quantidade(quantidade)
+                .precoVenda(precoUnitario)
+                .build();
     }
 }

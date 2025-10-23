@@ -1,8 +1,7 @@
 package com.xbrain.vendas.modulos.venda.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.xbrain.vendas.modulos.itemVenda.model.ItemVenda;
-import com.xbrain.vendas.modulos.produto.model.Produto;
-import com.xbrain.vendas.modulos.venda.dto.VendaRequest;
 import com.xbrain.vendas.modulos.vendedor.model.Vendedor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -25,7 +23,7 @@ public class Venda {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id_venda")
     private Long id_venda;
 
     @Column
@@ -35,21 +33,19 @@ public class Venda {
     private BigDecimal valorTotalVenda;
 
     @JoinColumn(name = "FK_VENDEDOR", foreignKey = @ForeignKey(name = "FK_VENDEDOR"), nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Vendedor vendedor;
 
-    @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @JoinColumn(name = "venda_id")
     private List<ItemVenda> itens;
 
-
-    /*
-    Fica para uma atualizacao futura, nao esta sendo usado no momento
-    public static Venda of(VendaRequest request, Vendedor vendedor, Produto produto, List<ItemVenda> itens) {
+    public static Venda of(Vendedor vendedor) {
         return Venda.builder()
                 .vendedor(vendedor)
-                .valorTotalVenda(valorTotal)
-                .itens(itens)
-                .dataVenda(new Date())
+                .dataVenda(LocalDate.now())
+                .valorTotalVenda(BigDecimal.ZERO)
                 .build();
-    }*/
+    }
 }
